@@ -50,7 +50,16 @@ Enter:
 - **Port**: `6053` (ESPHome native API default)
 - **Password**: leave empty if your `relay.yaml` has no API password
 
-## ESPHome setup
+## Flash the ESP32 (no ESPHome install needed)
+
+1. Connect the Waveshare board to your PC via USB
+2. Open **[web.esphome.io](https://web.esphome.io)** in Chrome or Edge
+3. Click **"Install"** → select the firmware from the [latest release](https://github.com/christoph-schuler/ha-felicity-hvc96050-bms/releases/latest)
+4. After flashing, the board creates a WiFi hotspot **"Felicity-BMS-Setup"** — connect to it
+5. Enter your home WiFi credentials in the captive portal that opens
+6. The board reboots and connects to your network — note the IP from your router
+
+## ESPHome setup (advanced — only if you want to customise)
 
 1. Copy `secrets.yaml.example` to `secrets.yaml` next to `relay.yaml`
 2. Fill in your WiFi credentials and the desired static IP for the ESP32
