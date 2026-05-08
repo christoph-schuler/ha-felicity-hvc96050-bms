@@ -1,0 +1,483 @@
+esphome:
+  name: waveshare-relay
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: arduino
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: !secret static_ip
+    gateway: !secret gateway
+    subnet: !secret subnet
+
+web_server:
+  port: 80
+
+logger:
+  level: INFO
+
+api:
+ota:
+  - platform: esphome
+
+uart:
+  id: uart_bus
+  tx_pin: GPIO17
+  rx_pin: GPIO18
+  baud_rate: 9600
+
+modbus:
+  id: modbus_bus
+  uart_id: uart_bus
+
+modbus_controller:
+  # Main controller: pack sensors (0x01xx + 0x02xx + 0x0231)
+  - id: felicity_bms
+    address: 0x01
+    modbus_id: modbus_bus
+    setup_priority: -10
+    command_throttle: 500ms
+    update_interval: 30s
+
+  # Module voltages (0x0220-0x0227) — isolated to avoid 0x021F/0x0220 boundary
+  - id: felicity_bms_modules
+    address: 0x01
+    modbus_id: modbus_bus
+    setup_priority: -10
+    command_throttle: 500ms
+    update_interval: 30s
+
+  # Pack NTC temps (0x0239-0x023B) — isolated from 0x0231 to prevent 7-register gap batch
+  - id: felicity_bms_ntc
+    address: 0x01
+    modbus_id: modbus_bus
+    setup_priority: -10
+    command_throttle: 500ms
+    update_interval: 30s
+
+  # Fault/alarm (0x1303, 0x1305) — split from balance (combined span 33 > 28 reg limit)
+  - id: felicity_bms_fault
+    address: 0x01
+    modbus_id: modbus_bus
+    setup_priority: -10
+    command_throttle: 500ms
+    update_interval: 30s
+
+  # Cell balance location (0x1321, 0x1323) — slow poll, only valid during balancing
+  - id: felicity_bms_balance
+    address: 0x01
+    modbus_id: modbus_bus
+    setup_priority: -10
+    command_throttle: 500ms
+    update_interval: 120s
+
+switch:
+  - platform: gpio
+    name: "Relais 1"
+    pin: GPIO1
+    id: relay_1
+  - platform: gpio
+    name: "Relais 2"
+    pin: GPIO2
+    id: relay_2
+  - platform: gpio
+    name: "Relais 3"
+    pin: GPIO41
+    id: relay_3
+  - platform: gpio
+    name: "Relais 4"
+    pin: GPIO42
+    id: relay_4
+  - platform: gpio
+    name: "Relais 5"
+    pin:
+      number: GPIO45
+      ignore_strapping_warning: true
+    id: relay_5
+  - platform: gpio
+    name: "Relais 6"
+    pin:
+      number: GPIO46
+      ignore_strapping_warning: true
+    id: relay_6
+
+sensor:
+
+  # ===== PACK ÜBERSICHT =====
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "HV_Pack_SOC"
+    address: 0x0110
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "HV_Pack_SOH"
+    address: 0x0111
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "HV_Pack_Spannung"
+    address: 0x0121
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "HV_Pack_Strom"
+    address: 0x0131
+    unit_of_measurement: "A"
+    value_type: S_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # ===== LADE-/ENTLADEGRENZEN =====
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Max Lade Spannung"
+    address: 0x0100
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Min Entlade Spannung"
+    address: 0x0101
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Max Lade Strom"
+    address: 0x0102
+    unit_of_measurement: "A"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Max Entlade Strom"
+    address: 0x0103
+    unit_of_measurement: "A"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # ===== ZELL-EXTREMWERTE =====
+  # Die "Modul/Zelle"-Register kodieren: high byte = Modul-Nr (1-8), low byte = Zellen-Nr
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Zelle_Hoechste_Spannung"
+    address: 0x0119
+    unit_of_measurement: "V"
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Zelle_Niedrigste_Spannung"
+    address: 0x011B
+    unit_of_measurement: "V"
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  # ===== TEMPERATUREN =====
+  # 0x011D/0x011F = max/min Zelltemperatur (bestätigt)
+  # 0x021C/0x021E = zugehöriger Modul- und Sensor-Index (high byte=Modul, low byte=Sensor)
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Hoechste_Zell_Temperatur"
+    address: 0x011D
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Hoechste_Zell_Temp_Modul"
+    address: 0x021C
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return (int(x) >> 8) & 0xFF;"
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Hoechste_Zell_Temp_Sensor"
+    address: 0x021C
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return int(x) & 0xFF;"
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Niedrigste_Zell_Temperatur"
+    address: 0x011F
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Niedrigste_Zell_Temp_Modul"
+    address: 0x021E
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return (int(x) >> 8) & 0xFF;"
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Niedrigste_Zell_Temp_Sensor"
+    address: 0x021E
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return int(x) & 0xFF;"
+
+  # ===== MODUL SPANNUNGEN (alle 8 Module, bestätigt) =====
+  # 0x0220-0x0227, Rohwert × 0.01 = Spannung in V (~53.2-53.8 V pro Modul)
+  # Eigener Controller: verhindert Batch-Anfrage über 0x021F/0x0220-Grenze
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_1_Spannung"
+    address: 0x0220
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_2_Spannung"
+    address: 0x0221
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_3_Spannung"
+    address: 0x0222
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_4_Spannung"
+    address: 0x0223
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_5_Spannung"
+    address: 0x0224
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_6_Spannung"
+    address: 0x0225
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_7_Spannung"
+    address: 0x0226
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_modules
+    register_type: holding
+    name: "Modul_8_Spannung"
+    address: 0x0227
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+
+  # ===== SYSTEM INFO =====
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "BMS_Zyklen"
+    address: 0x0231
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "BMS_Modus"
+    address: 0x020F
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms
+    register_type: holding
+    name: "Umgebungstemperatur"
+    address: 0x020E
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0
+
+  # ===== PACK NTC SENSOREN =====
+  # Drei interne Temperatursensoren (~20.5-20.8°C bei Raumtemperatur bestätigt)
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_ntc
+    register_type: holding
+    name: "Pack_Temp_NTC1"
+    address: 0x0239
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_ntc
+    register_type: holding
+    name: "Pack_Temp_NTC2"
+    address: 0x023A
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_ntc
+    register_type: holding
+    name: "Pack_Temp_NTC3"
+    address: 0x023B
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  # ===== FEHLER / ALARM (via 0x1300 EDMS Protokoll) =====
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_fault
+    register_type: holding
+    name: "BMS_Fault_Code"
+    address: 0x1303
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_fault
+    register_type: holding
+    name: "BMS_Alarm_Flag"
+    address: 0x1305
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+
+  # ===== ZELL-BALANCE (Modul + Zelle mit höchster/niedrigster Spannung) =====
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_balance
+    register_type: holding
+    name: "Zelle_Max_Modul"
+    address: 0x1321
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return (int(x) >> 8) & 0xFF;"
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_balance
+    register_type: holding
+    name: "Zelle_Max_Zelle"
+    address: 0x1321
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return int(x) & 0xFF;"
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_balance
+    register_type: holding
+    name: "Zelle_Min_Modul"
+    address: 0x1323
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return (int(x) >> 8) & 0xFF;"
+
+  - platform: modbus_controller
+    modbus_controller_id: felicity_bms_balance
+    register_type: holding
+    name: "Zelle_Min_Zelle"
+    address: 0x1323
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    filters:
+      - lambda: "return int(x) & 0xFF;"

@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Felicity HVC96050 BMS",
+        "description": "Enter the connection details for the ESPHome device connected to your Felicity battery.",
+        "data": {
+          "host": "Host / IP address",
+          "port": "Port (default 6053)",
+          "password": "API password (leave empty if not set)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect. Check that the device is online and the host/port are correct.",
+      "invalid_auth": "Authentication failed. Check the API password.",
+      "unknown": "Unexpected error. Check the Home Assistant logs."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  }
+}
