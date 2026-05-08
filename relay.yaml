@@ -40,7 +40,7 @@ modbus_controller:
     address: 0x01
     modbus_id: modbus_bus
     setup_priority: -10
-    command_throttle: 500ms
+    command_throttle: 1000ms
     update_interval: 30s
 
   # Module voltages (0x0220-0x0227) — isolated to avoid 0x021F/0x0220 boundary
@@ -48,31 +48,31 @@ modbus_controller:
     address: 0x01
     modbus_id: modbus_bus
     setup_priority: -10
-    command_throttle: 500ms
-    update_interval: 30s
+    command_throttle: 1000ms
+    update_interval: 34s
 
-  # Pack NTC temps (0x0239-0x023B) — isolated from 0x0231 to prevent 7-register gap batch
+  # Pack NTC temps (0x0239-0x023B) — 17s: prime interval avoids sync with 30s main controller
   - id: felicity_bms_ntc
     address: 0x01
     modbus_id: modbus_bus
     setup_priority: -10
-    command_throttle: 500ms
-    update_interval: 30s
+    command_throttle: 1000ms
+    update_interval: 17s
 
   # Fault/alarm (0x1303, 0x1305) — split from balance (combined span 33 > 28 reg limit)
   - id: felicity_bms_fault
     address: 0x01
     modbus_id: modbus_bus
     setup_priority: -10
-    command_throttle: 500ms
-    update_interval: 30s
+    command_throttle: 1000ms
+    update_interval: 43s
 
   # Cell balance location (0x1321, 0x1323) — slow poll, only valid during balancing
   - id: felicity_bms_balance
     address: 0x01
     modbus_id: modbus_bus
     setup_priority: -10
-    command_throttle: 500ms
+    command_throttle: 1000ms
     update_interval: 120s
 
 switch:
