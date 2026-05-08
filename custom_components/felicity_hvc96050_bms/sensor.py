@@ -252,32 +252,28 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         icon="mdi:bell-alert",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    # Cell balance location
+    # Cell balance location — only valid during active balancing, otherwise garbage
     "Zelle_Max_Modul": SensorEntityDescription(
         key="Zelle_Max_Modul",
-        name="Highest Cell Voltage Module",
-        state_class=SensorStateClass.MEASUREMENT,
+        name="Balancing: Highest Cell Module #",
         icon="mdi:battery-high",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     "Zelle_Max_Zelle": SensorEntityDescription(
         key="Zelle_Max_Zelle",
-        name="Highest Cell Voltage Position",
-        state_class=SensorStateClass.MEASUREMENT,
+        name="Balancing: Highest Cell #",
         icon="mdi:battery-high",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     "Zelle_Min_Modul": SensorEntityDescription(
         key="Zelle_Min_Modul",
-        name="Lowest Cell Voltage Module",
-        state_class=SensorStateClass.MEASUREMENT,
+        name="Balancing: Lowest Cell Module #",
         icon="mdi:battery-low",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
     "Zelle_Min_Zelle": SensorEntityDescription(
         key="Zelle_Min_Zelle",
-        name="Lowest Cell Voltage Position",
-        state_class=SensorStateClass.MEASUREMENT,
+        name="Balancing: Lowest Cell #",
         icon="mdi:battery-low",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
