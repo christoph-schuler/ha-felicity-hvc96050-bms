@@ -29,6 +29,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.BATTERY,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
     ),
     "HV_Pack_SOH": SensorEntityDescription(
         key="HV_Pack_SOH",
@@ -36,6 +37,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:battery-heart-variant",
+        suggested_display_precision=1,
     ),
     "HV_Pack_Spannung": SensorEntityDescription(
         key="HV_Pack_Spannung",
@@ -43,6 +45,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
     ),
     "HV_Pack_Strom": SensorEntityDescription(
         key="HV_Pack_Strom",
@@ -50,6 +53,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.CURRENT,
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
     ),
     # Charge/discharge limits
     "Max Lade Spannung": SensorEntityDescription(
@@ -59,6 +63,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     "Min Entlade Spannung": SensorEntityDescription(
         key="Min Entlade Spannung",
@@ -67,6 +72,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     "Max Lade Strom": SensorEntityDescription(
         key="Max Lade Strom",
@@ -75,6 +81,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     "Max Entlade Strom": SensorEntityDescription(
         key="Max Entlade Strom",
@@ -83,6 +90,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricCurrent.AMPERE,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     # Cell extremes
     "Zelle_Hoechste_Spannung": SensorEntityDescription(
@@ -91,6 +99,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=3,
     ),
     "Zelle_Niedrigste_Spannung": SensorEntityDescription(
         key="Zelle_Niedrigste_Spannung",
@@ -98,6 +107,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=3,
     ),
     # Temperatures
     "Hoechste_Zell_Temperatur": SensorEntityDescription(
@@ -106,6 +116,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
     ),
     "Niedrigste_Zell_Temperatur": SensorEntityDescription(
         key="Niedrigste_Zell_Temperatur",
@@ -113,6 +124,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=1,
     ),
     "Umgebungstemperatur": SensorEntityDescription(
         key="Umgebungstemperatur",
@@ -120,6 +132,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.TEMPERATURE,
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=0,
     ),
     "Pack_Temp_NTC1": SensorEntityDescription(
         key="Pack_Temp_NTC1",
@@ -128,6 +141,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     "Pack_Temp_NTC2": SensorEntityDescription(
         key="Pack_Temp_NTC2",
@@ -136,6 +150,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     "Pack_Temp_NTC3": SensorEntityDescription(
         key="Pack_Temp_NTC3",
@@ -144,30 +159,35 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=1,
     ),
     "Hoechste_Zell_Temp_Modul": SensorEntityDescription(
         key="Hoechste_Zell_Temp_Modul",
         name="Hottest Cell: Module #",
         icon="mdi:map-marker",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "Hoechste_Zell_Temp_Sensor": SensorEntityDescription(
         key="Hoechste_Zell_Temp_Sensor",
         name="Hottest Cell: Sensor #",
         icon="mdi:map-marker",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "Niedrigste_Zell_Temp_Modul": SensorEntityDescription(
         key="Niedrigste_Zell_Temp_Modul",
         name="Coldest Cell: Module #",
         icon="mdi:map-marker",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "Niedrigste_Zell_Temp_Sensor": SensorEntityDescription(
         key="Niedrigste_Zell_Temp_Sensor",
         name="Coldest Cell: Sensor #",
         icon="mdi:map-marker",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     # Module voltages
     "Modul_1_Spannung": SensorEntityDescription(
@@ -176,6 +196,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_2_Spannung": SensorEntityDescription(
         key="Modul_2_Spannung", name="Module 2 Voltage",
@@ -183,6 +204,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_3_Spannung": SensorEntityDescription(
         key="Modul_3_Spannung", name="Module 3 Voltage",
@@ -190,6 +212,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_4_Spannung": SensorEntityDescription(
         key="Modul_4_Spannung", name="Module 4 Voltage",
@@ -197,6 +220,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_5_Spannung": SensorEntityDescription(
         key="Modul_5_Spannung", name="Module 5 Voltage",
@@ -204,6 +228,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_6_Spannung": SensorEntityDescription(
         key="Modul_6_Spannung", name="Module 6 Voltage",
@@ -211,6 +236,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_7_Spannung": SensorEntityDescription(
         key="Modul_7_Spannung", name="Module 7 Voltage",
@@ -218,6 +244,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_8_Spannung": SensorEntityDescription(
         key="Modul_8_Spannung", name="Module 8 Voltage",
@@ -225,6 +252,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_9_Spannung": SensorEntityDescription(
         key="Modul_9_Spannung", name="Module 9 Voltage",
@@ -232,6 +260,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_10_Spannung": SensorEntityDescription(
         key="Modul_10_Spannung", name="Module 10 Voltage",
@@ -239,6 +268,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_11_Spannung": SensorEntityDescription(
         key="Modul_11_Spannung", name="Module 11 Voltage",
@@ -246,6 +276,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     "Modul_12_Spannung": SensorEntityDescription(
         key="Modul_12_Spannung", name="Module 12 Voltage",
@@ -253,6 +284,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=2,
     ),
     # System
     "BMS_Zyklen": SensorEntityDescription(
@@ -260,12 +292,14 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         name="Cycle Count",
         state_class=SensorStateClass.TOTAL_INCREASING,
         icon="mdi:counter",
+        suggested_display_precision=0,
     ),
     "BMS_Modus": SensorEntityDescription(
         key="BMS_Modus",
         name="BMS Mode",
         icon="mdi:cog",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     # Fault / alarm
     "BMS_Fault_Code": SensorEntityDescription(
@@ -273,12 +307,14 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         name="Fault Code",
         icon="mdi:alert-circle",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "BMS_Alarm_Flag": SensorEntityDescription(
         key="BMS_Alarm_Flag",
         name="Alarm Flag",
         icon="mdi:bell-alert",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     # Cell balance location — only valid during active balancing, otherwise garbage
     "Zelle_Max_Modul": SensorEntityDescription(
@@ -286,24 +322,28 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         name="Balancing: Highest Cell Module #",
         icon="mdi:battery-high",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "Zelle_Max_Zelle": SensorEntityDescription(
         key="Zelle_Max_Zelle",
         name="Balancing: Highest Cell #",
         icon="mdi:battery-high",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "Zelle_Min_Modul": SensorEntityDescription(
         key="Zelle_Min_Modul",
         name="Balancing: Lowest Cell Module #",
         icon="mdi:battery-low",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
     "Zelle_Min_Zelle": SensorEntityDescription(
         key="Zelle_Min_Zelle",
         name="Balancing: Lowest Cell #",
         icon="mdi:battery-low",
         entity_category=EntityCategory.DIAGNOSTIC,
+        suggested_display_precision=0,
     ),
 }
 

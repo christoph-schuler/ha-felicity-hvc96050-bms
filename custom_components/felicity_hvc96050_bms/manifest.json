@@ -1,7 +1,7 @@
 {
   "domain": "felicity_hvc96050_bms",
   "name": "Felicity HVC96050 BMS (Unofficial)",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "documentation": "https://github.com/christoph-schuler/ha-felicity-hvc96050-bms",
   "issue_tracker": "https://github.com/christoph-schuler/ha-felicity-hvc96050-bms/issues",
   "codeowners": ["@christoph-schuler"],
