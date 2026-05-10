@@ -191,7 +191,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
     ),
     # Module voltages
     "Modul_1_Spannung": SensorEntityDescription(
-        key="Modul_1_Spannung", name="Module 1 Voltage",
+        key="Modul_1_Spannung", name="Cell Group 1 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -199,7 +199,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_2_Spannung": SensorEntityDescription(
-        key="Modul_2_Spannung", name="Module 2 Voltage",
+        key="Modul_2_Spannung", name="Cell Group 2 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -207,7 +207,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_3_Spannung": SensorEntityDescription(
-        key="Modul_3_Spannung", name="Module 3 Voltage",
+        key="Modul_3_Spannung", name="Cell Group 3 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -215,7 +215,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_4_Spannung": SensorEntityDescription(
-        key="Modul_4_Spannung", name="Module 4 Voltage",
+        key="Modul_4_Spannung", name="Cell Group 4 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -223,7 +223,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_5_Spannung": SensorEntityDescription(
-        key="Modul_5_Spannung", name="Module 5 Voltage",
+        key="Modul_5_Spannung", name="Cell Group 5 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -231,7 +231,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_6_Spannung": SensorEntityDescription(
-        key="Modul_6_Spannung", name="Module 6 Voltage",
+        key="Modul_6_Spannung", name="Cell Group 6 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -239,7 +239,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_7_Spannung": SensorEntityDescription(
-        key="Modul_7_Spannung", name="Module 7 Voltage",
+        key="Modul_7_Spannung", name="Cell Group 7 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -247,7 +247,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_8_Spannung": SensorEntityDescription(
-        key="Modul_8_Spannung", name="Module 8 Voltage",
+        key="Modul_8_Spannung", name="Cell Group 8 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -255,7 +255,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_9_Spannung": SensorEntityDescription(
-        key="Modul_9_Spannung", name="Module 9 Voltage",
+        key="Modul_9_Spannung", name="Cell Group 9 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -263,7 +263,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_10_Spannung": SensorEntityDescription(
-        key="Modul_10_Spannung", name="Module 10 Voltage",
+        key="Modul_10_Spannung", name="Cell Group 10 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -271,7 +271,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_11_Spannung": SensorEntityDescription(
-        key="Modul_11_Spannung", name="Module 11 Voltage",
+        key="Modul_11_Spannung", name="Cell Group 11 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
@@ -279,7 +279,7 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         suggested_display_precision=2,
     ),
     "Modul_12_Spannung": SensorEntityDescription(
-        key="Modul_12_Spannung", name="Module 12 Voltage",
+        key="Modul_12_Spannung", name="Cell Group 12 Voltage",
         device_class=SensorDeviceClass.VOLTAGE,
         native_unit_of_measurement=UnitOfElectricPotential.VOLT,
         state_class=SensorStateClass.MEASUREMENT,
